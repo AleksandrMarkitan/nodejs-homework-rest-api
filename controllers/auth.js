@@ -87,6 +87,14 @@ const avatarsDir = path.join(__dirname, "../", "public", "avatars");
 const updateAvatar = async (req, res) => {
   const { _id } = req.user;
   const { path: tempUpload, originalname } = req.file;
+
+  const image = await Jimp.read(tempUpload);
+  // Resize the image to width 250 and auto height.
+  // await image.resize(250, Jimp.AUTO);
+  await image.resize(250, 250);
+  // Save and overwrite the image
+  await image.writeAsync(tempUpload);
+
   const filename = `${_id}_${originalname}`;
   const resultUpload = path.join(avatarsDir, filename);
 
@@ -94,13 +102,6 @@ const updateAvatar = async (req, res) => {
   const avatarURL = path.join("avatars", filename);
 
   await User.findByIdAndUpdate(_id, { avatarURL });
-
-  const image = await Jimp.read(resultUpload);
-  // Resize the image to width 250 and auto height.
-  // await image.resize(250, Jimp.AUTO);
-  await image.resize(250, 250);
-  // Save and overwrite the image
-  await image.writeAsync(resultUpload);
 
   res.json({ avatarURL });
 };
