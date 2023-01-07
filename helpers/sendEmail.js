@@ -4,7 +4,7 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
-const { META_PASSWORD } = process.env;
+const { META_PASSWORD, MAIL_USERNAME } = process.env;
 // const { SENDGRID_API_KEY } = process.env;
 
 const nodemailerConfig = {
@@ -12,7 +12,7 @@ const nodemailerConfig = {
   port: 465, // 25, 465, 2525
   secure: true,
   auth: {
-    user: "markendev@meta.ua",
+    user: MAIL_USERNAME,
     pass: META_PASSWORD,
   },
 };
@@ -22,7 +22,7 @@ const transport = nodemailer.createTransport(nodemailerConfig);
 const sendEmail = async (data) => {
   const email = {
     ...data,
-    from: "markendev@meta.ua",
+    from: MAIL_USERNAME,
   };
   await transport
     .sendMail(email)
