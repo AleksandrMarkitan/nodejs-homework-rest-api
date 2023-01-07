@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer");
 // const sgMail = require("@sendgrid/mail");
 
 require("dotenv").config();
-process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 
 const { META_PASSWORD, MAIL_USERNAME } = process.env;
 // const { SENDGRID_API_KEY } = process.env;

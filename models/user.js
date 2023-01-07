@@ -19,6 +19,11 @@ const userSchema = new Schema(
       match: emailRegExp,
       unique: true,
     },
+    name: {
+      type: String,
+      minlength: 2,
+      required: [true, "Name is required"],
+    },
     subscription: {
       type: String,
       enum: ["starter", "pro", "business"],
@@ -49,6 +54,7 @@ userSchema.post("save", handleMongooseError);
 
 const signupSchema = Joi.object({
   password: Joi.string().min(6).required(),
+  name: Joi.string().min(2).required(),
   email: Joi.string().pattern(emailRegExp).required(),
 });
 const loginSchema = Joi.object({
